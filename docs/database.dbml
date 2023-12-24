@@ -1,0 +1,49 @@
+Table User {
+  id uuid [pk]
+  last_name varchar(100)
+  first_name varchar(100)
+  email varchar(255) [unique]
+  roles array(string)
+  created_at datetime
+  updated_at datetime [null]
+}
+
+Table Poll {
+  id uuid [pk]
+  user_id uuid [ref: < User.id] // poll's owner
+  question text
+  description text [null]
+  isMultipleChoices bool
+  hasOtherChoice bool
+  created_at datetime
+  updated_at datetime [null]
+}
+
+Table Option {
+  id uuid [pk]
+  title text
+  user_id uuid [ref: < User.id] // user's choice
+  poll_id uuid [ref: < Poll.id]
+}
+
+Table Participation {
+  id uuid [pk]
+  user_id uuid [ref: > User.id, null]
+  username text [null]
+  user_email text [null]
+  poll_id uuid [ref: > Poll.id]
+  created_at datetime
+  updated_at datetime [null]
+}
+
+Table UserChoice {
+  id uuid [pk]
+  participation_id uuid [ref: > Participation.id]
+  option_id uuid [ref: > Option.id]
+}
+
+Table Session {
+  id uuid [pk]
+  user_id uuid [ref: - User.id]
+  createdAt timestamp 
+}
