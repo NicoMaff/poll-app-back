@@ -3,47 +3,60 @@ Table User {
   last_name varchar(100)
   first_name varchar(100)
   email varchar(255) [unique]
-  roles array(string)
-  created_at datetime
-  updated_at datetime [null]
+  password string
+  roles _text
+  created_at timestamp
+  updated_at timestamp
 }
 
 Table Poll {
   id uuid [pk]
-  user_id uuid [ref: < User.id] // poll's owner
-  question text
+  user_id uuid // poll's owner
+  question varchar(255)
   description text [null]
-  isMultipleChoices bool
-  hasOtherChoice bool
-  created_at datetime
-  updated_at datetime [null]
+  isMultipleChoice bool [default: false]
+  hasUndefinedChoice bool [default: false]
+  created_at timestamp
+  updated_at timestamp
 }
 
 Table Option {
-  id uuid [pk]
-  title text
-  user_id uuid [ref: < User.id] // user's choice
-  poll_id uuid [ref: < Poll.id]
+  id integer [pk]
+  title varchar(255)
+  poll_id uuid
 }
 
 Table Participation {
-  id uuid [pk]
-  user_id uuid [ref: > User.id, null]
-  username text [null]
-  user_email text [null]
-  poll_id uuid [ref: > Poll.id]
-  created_at datetime
-  updated_at datetime [null]
+  id integer [pk]
+  user_id uuid
+  username varchar(100) [null]
+  user_email varchar(255) [null]
+  poll_id uuid
+  created_at timestamp
+  updated_at timestamp
 }
 
 Table UserChoice {
-  id uuid [pk]
-  participation_id uuid [ref: > Participation.id]
-  option_id uuid [ref: > Option.id]
+  id integer [pk]
+  participation_id integer 
+  option_id integer
 }
 
 Table Session {
   id uuid [pk]
-  user_id uuid [ref: - User.id]
+  user_id uuid
   createdAt timestamp 
 }
+
+//OneToOne
+ref: User.id - Session.user_id
+
+// OneToMany
+ref: User.id < Poll.user_id
+ref: User.id < Participation.user_id
+ref: Poll.id < Option.poll_id
+ref: Poll.id < Participation.poll_id
+
+// ManyToMany
+ref: Option.id < UserChoice.option_id
+ref: Participation.id < UserChoice.participation_id
