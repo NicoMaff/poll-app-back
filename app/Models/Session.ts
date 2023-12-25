@@ -1,13 +1,14 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { column } from "@ioc:Adonis/Lucid/Orm";
+import { DateTime } from "luxon";
+import AppBaseModel from "./AppBaseModel";
 
-export default class Session extends BaseModel {
+export default class Session extends AppBaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id: number;
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  public updatedAt: DateTime;
 }

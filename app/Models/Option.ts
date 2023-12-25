@@ -1,7 +1,8 @@
-import { BaseModel, BelongsTo, belongsTo, column } from "@ioc:Adonis/Lucid/Orm";
+import { BelongsTo, belongsTo, column } from "@ioc:Adonis/Lucid/Orm";
+import AppBaseModel from "./AppBaseModel";
 import Poll from "./Poll";
 
-export default class Option extends BaseModel {
+export default class Option extends AppBaseModel {
   @column({ isPrimary: true })
   public id: number;
 

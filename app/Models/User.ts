@@ -1,6 +1,5 @@
 import Hash from "@ioc:Adonis/Core/Hash";
 import {
-  BaseModel,
   HasMany,
   HasOne,
   beforeCreate,
@@ -11,11 +10,12 @@ import {
 } from "@ioc:Adonis/Lucid/Orm";
 import { DateTime } from "luxon";
 import { v4 } from "uuid";
+import AppBaseModel from "./AppBaseModel";
 import Participation from "./Participation";
 import Poll from "./Poll";
 import Session from "./Session";
 
-export default class User extends BaseModel {
+export default class User extends AppBaseModel {
   @column({ isPrimary: true })
   public id: number;
 

@@ -1,18 +1,18 @@
 import { DateTime } from "luxon";
 
 import {
-  BaseModel,
   BelongsTo,
   HasMany,
   belongsTo,
   column,
   hasMany,
 } from "@ioc:Adonis/Lucid/Orm";
-import User from "./User";
+import AppBaseModel from "./AppBaseModel";
 import Option from "./Option";
 import Participation from "./Participation";
+import User from "./User";
 
-export default class Poll extends BaseModel {
+export default class Poll extends AppBaseModel {
   @column({ isPrimary: true })
   public id: number;
 
