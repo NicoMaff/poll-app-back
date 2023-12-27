@@ -1,12 +1,13 @@
-import { DateTime } from "luxon";
-
 import {
   BelongsTo,
   HasMany,
+  beforeCreate,
   belongsTo,
   column,
   hasMany,
 } from "@ioc:Adonis/Lucid/Orm";
+import { DateTime } from "luxon";
+import { v4 } from "uuid";
 import AppBaseModel from "./AppBaseModel";
 import Option from "./Option";
 import Participation from "./Participation";
@@ -14,7 +15,7 @@ import User from "./User";
 
 export default class Poll extends AppBaseModel {
   @column({ isPrimary: true })
-  public id: number;
+  public id: string;
 
   @column()
   public userId: string;
@@ -36,6 +37,14 @@ export default class Poll extends AppBaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime;
+
+  /**
+   * Hooks
+   */
+  @beforeCreate()
+  public static async generateUUID(user: User) {
+    user.id = v4();
+  }
 
   /**
    * Relations

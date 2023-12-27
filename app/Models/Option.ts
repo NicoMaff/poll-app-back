@@ -10,7 +10,7 @@ export default class Option extends AppBaseModel {
   public title: string;
 
   @column()
-  public pollId: number;
+  public pollId: string;
 
   /**
    * Relations

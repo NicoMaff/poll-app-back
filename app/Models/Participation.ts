@@ -16,7 +16,7 @@ export default class Participation extends AppBaseModel {
   public id: number;
 
   @column()
-  public userId: number;
+  public userId: string;
 
   @column()
   public username: string;
@@ -25,7 +25,7 @@ export default class Participation extends AppBaseModel {
   public userEmail: string;
 
   @column()
-  public pollId: number;
+  public pollId: string;
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;

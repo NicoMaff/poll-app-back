@@ -17,7 +17,7 @@ import Session from "./Session";
 
 export default class User extends AppBaseModel {
   @column({ isPrimary: true })
-  public id: number;
+  public id: string;
 
   @column()
   public lastName: string;
