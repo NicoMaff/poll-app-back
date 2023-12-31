@@ -39,7 +39,7 @@
       ],
       "#exceptions/*": [
         "./app/Exceptions/*.ts"
-      ],
+      ]
     },
     "types": [
       "@adonisjs/core",
@@ -48,7 +48,8 @@
       "@adonisjs/lucid",
       "@adonisjs/auth",
       "@adonisjs/session",
-      "@adonisjs/redis"
+      "@adonisjs/redis",
+      "@adonisjs/bouncer"
     ]
   }
 }
