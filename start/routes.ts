@@ -26,6 +26,10 @@ Route.group(() => {
     Route.get("/me", "UsersController.me");
     Route.get("/user/:id", "UsersController.show");
     Route.get("/users", "UsersController.show");
+    Route.post("/user", "UsersController.create");
+    Route.patch("/user", "UsersController.update");
+    Route.patch("/user/:id", "UsersController.update");
+    Route.delete("/user/:id", "UsersController.destroy");
   }).middleware("auth");
 
   /**

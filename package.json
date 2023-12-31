@@ -22,7 +22,8 @@
     "#models/*": "./app/Models/*.ts",
     "#validators/*": "./app/Validators/*.ts",
     "#strategies/*": "./app/Strategies/*.ts",
-    "#middlewares/*": "./app/Middleware/*.ts"
+    "#middlewares/*": "./app/Middleware/*.ts",
+    "#utils/*": "./app/Utils/*.ts"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.6",

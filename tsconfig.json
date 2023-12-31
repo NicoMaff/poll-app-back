@@ -39,6 +39,9 @@
       ],
       "#exceptions/*": [
         "./app/Exceptions/*.ts"
+      ],
+      "#utils/*": [
+        "./app/Utils/*.ts"
       ]
     },
     "types": [
