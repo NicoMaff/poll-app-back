@@ -1,6 +1,8 @@
+// import User from "#models/User";
+// import CreateUserValidator from "#validators/CreateUserValidator";
+import User from "#models/User";
+import CreateUserValidator from "#validators/CreateUserValidator";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
-import CreateUserValidator from "../../Validators/CreateUserValidator";
-import User from "../../Models/User";
 
 export default class AuthController {
   public async login({ request, auth, response }: HttpContextContract) {
@@ -9,12 +11,12 @@ export default class AuthController {
 
     await auth.use("web").attempt(email, password);
 
-    return response.json("Connection succeed!");
+    return response.ok({ message: "Connection succeed!" });
   }
 
   public async logout({ auth, response }: HttpContextContract) {
     await auth.logout();
-    return response.json("Logout succeed.");
+    return response.json({ message: "Logout succeed." });
   }
 
   public async register({ request, response }: HttpContextContract) {

@@ -8,9 +8,9 @@ import {
 } from "@ioc:Adonis/Lucid/Orm";
 import { DateTime } from "luxon";
 import { v4 } from "uuid";
-import AppBaseModel from "./AppBaseModel";
-import Participation from "./Participation";
-import Poll from "./Poll";
+import AppBaseModel from "#models/AppBaseModel";
+import Participation from "#models/Participation";
+import Poll from "#models/Poll";
 
 export default class User extends AppBaseModel {
   @column({ isPrimary: true })

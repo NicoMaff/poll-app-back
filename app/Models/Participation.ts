@@ -6,10 +6,10 @@ import {
   manyToMany,
 } from "@ioc:Adonis/Lucid/Orm";
 import { DateTime } from "luxon";
-import AppBaseModel from "./AppBaseModel";
-import Option from "./Option";
-import Poll from "./Poll";
-import User from "./User";
+import AppBaseModel from "#models/AppBaseModel";
+import Option from "#models/Option";
+import Poll from "#models/Poll";
+import User from "#models/User";
 
 export default class Participation extends AppBaseModel {
   @column({ isPrimary: true })

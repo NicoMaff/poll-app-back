@@ -8,14 +8,11 @@
     "build"
   ],
   "compilerOptions": {
-    "outDir": "build",
+    "outDir": "./build",
     "rootDir": "./",
     "sourceMap": true,
     "baseUrl": "./",
     "paths": {
-      "App/*": [
-        "./app/*"
-      ],
       "Config/*": [
         "./config/*"
       ],
@@ -24,7 +21,25 @@
       ],
       "Database/*": [
         "./database/*"
-      ]
+      ],
+      "#controllers/*": [
+        "./app/Controllers/Http/*.ts"
+      ],
+      "#models/*": [
+        "./app/Models/*.ts"
+      ],
+      "#validators/*": [
+        "./app/Validators/*.ts"
+      ],
+      "#strategies/*": [
+        "./app/Strategies/*.ts"
+      ],
+      "#middlewares/*": [
+        "./app/Middleware/*.ts"
+      ],
+      "#exceptions/*": [
+        "./app/Exceptions/*.ts"
+      ],
     },
     "types": [
       "@adonisjs/core",

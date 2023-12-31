@@ -8,10 +8,10 @@ import {
 } from "@ioc:Adonis/Lucid/Orm";
 import { DateTime } from "luxon";
 import { v4 } from "uuid";
-import AppBaseModel from "./AppBaseModel";
-import Option from "./Option";
-import Participation from "./Participation";
-import User from "./User";
+import AppBaseModel from "#models/AppBaseModel";
+import Option from "#models/Option";
+import Participation from "#models/Participation";
+import User from "#models/User";
 
 export default class Poll extends AppBaseModel {
   @column({ isPrimary: true })

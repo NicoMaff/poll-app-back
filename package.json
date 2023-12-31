@@ -17,6 +17,12 @@
   "eslintIgnore": [
     "build"
   ],
+  "imports": {
+    "#controllers/*": "./app/Controllers/Http/*.ts",
+    "#models/*": "./app/Models/*.ts",
+    "#validators/*": "./app/Validators/*.ts",
+    "#strategies/*": "./app/Strategies/*.ts"
+  },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.6",
     "@japa/preset-adonis": "^1.2.0",
