@@ -1,0 +1,33 @@
+meta {
+  name: createUser
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3333/api/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "{{email}}",
+    "firstName": "{{firstName}}",
+    "lastName": "{{lastName}}"
+  }
+}
+
+vars:pre-request {
+  lastName: 
+  firstName: 
+  email: 
+}
+
+docs {
+  All properties are required!
+  
+  Data will be fomatted by the backend.
+  
+  A temporary password will be assigned to the user. 
+}

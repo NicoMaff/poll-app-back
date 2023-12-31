@@ -1,0 +1,34 @@
+meta {
+  name: updateUser
+  type: http
+  seq: 6
+}
+
+patch {
+  url: http://localhost:3333/api/user/{{id}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "lastName": "{{lastName}}",
+    "firstName": "{{firstName}}",
+    "email": "{{email}}"
+  }
+}
+
+vars:pre-request {
+  id: 
+  lastName: 
+  firstName: 
+  email: 
+}
+
+docs {
+  All properties are not required.
+  
+  Data will be fomatted by the backend.
+  
+  If the param does not correspond to an uuid type, an "Route not found" error will thrown.
+}

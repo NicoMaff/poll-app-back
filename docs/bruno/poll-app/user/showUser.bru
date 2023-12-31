@@ -1,0 +1,19 @@
+meta {
+  name: showUser
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3333/api/user/{{id}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  id: 
+}
+
+docs {
+  If the param does not correspond to an uuid type, an "Route not found" error will thrown.
+}

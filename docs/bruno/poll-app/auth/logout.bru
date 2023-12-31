@@ -1,0 +1,22 @@
+meta {
+  name: logout
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3333/api/logout
+  body: none
+  auth: none
+}
+
+body:json {
+  {
+    "email": "nico@mail.com",
+    "password": "password"
+  }
+}
+
+docs {
+  This route uses the authentication service to get user session and clear it.
+}

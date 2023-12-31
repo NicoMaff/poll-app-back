@@ -1,0 +1,15 @@
+meta {
+  name: showMe
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:3333/api/me
+  body: none
+  auth: none
+}
+
+docs {
+  This route uses the authentication service to get the user's data.
+}

@@ -1,0 +1,37 @@
+meta {
+  name: editMe
+  type: http
+  seq: 5
+}
+
+patch {
+  url: http://localhost:3333/api/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "lastName": "{{lastName}}",
+    "firstName": "{{firstName}}",
+    "email": "{{email}}",
+    "password": "{{password}}",
+    "confirmPassword": "{{confirmPassword}}"
+  }
+}
+
+vars:pre-request {
+  lastName: nico
+  firstName: 
+  email: 
+  password: 
+  confirmPassword: 
+}
+
+docs {
+  All properties are not required.
+  
+  However, to edit the password, the confirmPassword property will be required.
+  
+  Data will be fomatted by the backend.
+}
