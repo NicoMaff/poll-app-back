@@ -1,5 +1,5 @@
 import User from "#models/User";
-import { OptionalUuidSchema, UuidSchema } from "#utils/UuidSchema";
+import { OptionalUuidSchema, UuidSchema } from "#utils/genericSchemas";
 import { randomPassword } from "#utils/randomPassword";
 import CreateUserByAdminValidator from "#validators/CreateUserByAdminValidator";
 import UpdateUserByAdminValidator from "#validators/UpdateUserByAdminValidator";

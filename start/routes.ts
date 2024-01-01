@@ -42,6 +42,11 @@ Route.group(() => {
     Route.post("/login", "AuthController.login");
     Route.post("/logout", "AuthController.logout");
     Route.post("/register", "AuthController.register");
+    /**
+     * Reset Password
+     */
+    Route.post("/reset-password", "PasswordResetController.init");
+    Route.post("/reset-password/:token", "PasswordResetController.reset");
   });
 
   //
