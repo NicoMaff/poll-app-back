@@ -11,6 +11,7 @@ import { v4 } from "uuid";
 import AppBaseModel from "#models/AppBaseModel";
 import Participation from "#models/Participation";
 import Poll from "#models/Poll";
+import Token from "#models/Token";
 
 export default class User extends AppBaseModel {
   @column({ isPrimary: true })
@@ -45,6 +46,14 @@ export default class User extends AppBaseModel {
 
   @hasMany(() => Participation)
   public participations: HasMany<typeof Participation>;
+
+  @hasMany(() => Token)
+  public tokens: HasMany<typeof Token>;
+
+  @hasMany(() => Token, {
+    onQuery: (query) => query.where("type", "PASSWORD_RESET"),
+  })
+  public passwordResetTokens: HasMany<typeof Token>;
 
   /**
    * Hooks
