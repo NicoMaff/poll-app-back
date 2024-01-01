@@ -1,0 +1,32 @@
+meta {
+  name: reset
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3333/api/reset-password/{{token}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "password": "{{password}}",
+    "confirmPassword": "{{confirmPassword}}"
+  }
+}
+
+vars:pre-request {
+  token: 
+  password: 
+  confirmPassword: 
+}
+
+docs {
+  This route must be called after the "init" route.
+  
+  The token send by email will be required as params.
+  
+  The body will require a new password and a confirmation.
+}

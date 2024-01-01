@@ -1,0 +1,26 @@
+meta {
+  name: init
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3333/api/reset-password
+  body: json
+  auth: none
+}
+
+body:json {
+  {"email": "{{email}}"}
+}
+
+vars:pre-request {
+  email: nico@mail.com
+}
+
+docs {
+  This route required an email to initialize the reset process.
+  
+  A token will be send to the given email, if it exists in database.
+  
+}
