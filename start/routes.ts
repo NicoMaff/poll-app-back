@@ -30,6 +30,15 @@ Route.group(() => {
     Route.patch("/user", "UsersController.update");
     Route.patch("/user/:id", "UsersController.update");
     Route.delete("/user/:id", "UsersController.destroy");
+
+    /**
+     * Poll
+     */
+    Route.get("/poll/:id", "PollsController.show");
+    Route.get("/polls", "PollsController.show");
+    Route.post("/poll", "PollsController.create");
+    Route.patch("/poll/:id", "PollsController.update");
+    Route.delete("/poll/:id", "PollsController.destroy");
   }).middleware("auth");
 
   /**
