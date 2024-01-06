@@ -30,8 +30,10 @@ import Bouncer from "@ioc:Adonis/Addons/Bouncer";
 | NOTE: Always export the "actions" const from this file
 |****************************************************************
 */
-export const { actions } = Bouncer.define("isAdmin", (user: User) =>
-  user.roles.includes("ROLE_ADMIN")
+export const { actions } = Bouncer.define(
+  "isAdmin",
+  (user: User) =>
+    user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_SUPERADMIN")
 );
 
 /*
