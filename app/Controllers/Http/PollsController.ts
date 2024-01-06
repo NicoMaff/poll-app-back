@@ -1,7 +1,7 @@
-import CreatePollAction from "#actions/createPollAction";
-import DeletePollAction from "#actions/deletePollAction";
-import GetPollAction from "#actions/getPollAction";
-import UpdatePollAction from "#actions/updatePollAction";
+import CreatePollAction from "#actions/polls/createPollAction";
+import DeletePollAction from "#actions/polls/deletePollAction";
+import GetPollAction from "#actions/polls/getPollAction";
+import UpdatePollAction from "#actions/polls/updatePollAction";
 import Poll from "#models/Poll";
 import { OptionalUuidSchema } from "#utils/genericSchemas";
 import CreatePollValidator from "#validators/CreatePollValidator";

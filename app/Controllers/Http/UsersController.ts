@@ -1,13 +1,26 @@
+import CreateUserAction from "#actions/users/createUserAction";
+import DeleteUserAction from "#actions/users/deleteUserAction";
+import GetUSerAction from "#actions/users/getUserAction";
+import UpdateUserAction from "#actions/users/updateUserAction";
 import User from "#models/User";
 import { OptionalUuidSchema, UuidSchema } from "#utils/genericSchemas";
-import { randomPassword } from "#utils/randomPassword";
 import CreateUserByAdminValidator from "#validators/CreateUserByAdminValidator";
 import UpdateUserByAdminValidator from "#validators/UpdateUserByAdminValidator";
 import UpdateUserValidator from "#validators/UpdateUserValidator";
+import { inject } from "@adonisjs/core/build/standalone";
+import { string } from "@ioc:Adonis/Core/Helpers";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { validator } from "@ioc:Adonis/Core/Validator";
 
+@inject()
 export default class UsersController {
+  constructor(
+    private CreateUserAction: CreateUserAction,
+    private GetUserAction: GetUSerAction,
+    private UpdateUserAction: UpdateUserAction,
+    private DeleteUserAction: DeleteUserAction
+  ) {}
+
   /**
    * Return data of authenticated user
    */
@@ -23,14 +36,14 @@ export default class UsersController {
       schema: OptionalUuidSchema,
       data: { id: params.id },
     });
-    await bouncer.authorize("isAdmin");
 
+    await bouncer.authorize("isAdmin");
     if (id) {
-      const user = await User.find(id);
+      const user = await this.GetUserAction.execute(id);
       return response.ok(user);
     }
 
-    const users = await User.all();
+    const users = await this.GetUserAction.execute();
     return response.ok(users);
   }
 
@@ -40,9 +53,9 @@ export default class UsersController {
   public async create({ request, response, bouncer }: HttpContextContract) {
     const payload = await request.validate(CreateUserByAdminValidator);
     await bouncer.authorize("isAdmin");
-    const password = randomPassword();
+    const password = string.generateRandom(10);
 
-    const user = await User.create({ ...payload, password });
+    const user = await this.CreateUserAction.execute(payload, password);
 
     return response.ok(user);
   }
@@ -68,18 +81,18 @@ export default class UsersController {
       const payload = await request.validate(UpdateUserByAdminValidator);
       const user = await User.findOrFail(id);
 
-      user.merge(payload);
-      user.save();
+      this.UpdateUserAction.execute(payload, user);
+      await user.save();
 
       return response.created(user);
     }
 
-    const { user } = auth;
+    const authenticatedUser = await auth.authenticate();
     const payload = await request.validate(UpdateUserValidator);
-    user?.merge(payload);
-    user?.save();
+    this.UpdateUserAction.execute(payload, authenticatedUser);
+    await authenticatedUser.save();
 
-    return response.created(auth.user);
+    return response.created(authenticatedUser);
   }
 
   /**
@@ -90,10 +103,12 @@ export default class UsersController {
       schema: UuidSchema,
       data: { id: params.id },
     });
+    if (!id) throw new Error("The poll's UUID is incorrect!");
 
     await bouncer.authorize("isAdmin");
     const user = await User.findOrFail(id);
-    user.delete();
+    await this.DeleteUserAction.execute(user);
+
     return response.ok({
       message: `The user account has been correctly deleted!`,
     });
