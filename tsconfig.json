@@ -42,6 +42,9 @@
       ],
       "#utils/*": [
         "./app/Utils/*.ts"
+      ],
+      "#actions/*": [
+        "./app/Actions/*.ts"
       ]
     },
     "types": [
