@@ -1,0 +1,30 @@
+meta {
+  name: deletePoll
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/poll/{{id}}
+  body: none
+  auth: none
+}
+
+body:json {
+  {
+    "question": "{{question}}",
+    "description": "{{description}}",
+    "isMultipleChoice": "{{isMultipleChoice}}",
+    "hasUndefinedChoice": "{{hasUndefinedChoice}}"
+  }
+}
+
+vars:pre-request {
+  id: 7c0036ff-58d3-46c5-927b-bd34369f5611
+}
+
+docs {
+  This route allows: 
+  - an user to delete one of his polls;
+  - the admin to delete any poll.
+}

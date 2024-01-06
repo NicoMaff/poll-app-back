@@ -1,0 +1,34 @@
+meta {
+  name: updatePoll
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{baseUrl}}/api/poll/{{id}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "question": "{{question}}",
+    "description": "{{description}}",
+    "isMultipleChoice": "{{isMultipleChoice}}",
+    "hasUndefinedChoice": "{{hasUndefinedChoice}}"
+  }
+}
+
+vars:pre-request {
+  id: 7c0036ff-58d3-46c5-927b-bd34369f5611
+  description: Nouvelle description2
+  ~question: 
+  ~isMultipleChoice: 
+  ~hasUndefinedChoice: 
+}
+
+docs {
+  This route allows an user to update one of his polls.
+  
+  All properties are optional.
+}

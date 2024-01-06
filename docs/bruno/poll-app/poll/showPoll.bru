@@ -1,0 +1,15 @@
+meta {
+  name: showPoll
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/poll/{{id}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  id: 1
+}

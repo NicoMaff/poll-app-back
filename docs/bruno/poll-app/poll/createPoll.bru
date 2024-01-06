@@ -1,0 +1,35 @@
+meta {
+  name: createPoll
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/poll
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "question": "{{question}}",
+    "description": "{{decription}}",
+    "isMultipleChoice": "{{isMultipleChoice}}",
+    "hasUndefinedChoice": "{{hasUndefinedChoice}}"
+  }
+}
+
+vars:pre-request {
+  question: Ceci est une question test
+  description: description
+  isMultipleChoice: true
+  hasUndefinedChoice: false
+}
+
+docs {
+  This route allows an user to create a poll.
+  
+  Only the question property is required! 
+  
+  The boolean properties are set to false by default.
+}
