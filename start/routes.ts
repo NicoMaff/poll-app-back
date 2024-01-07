@@ -39,6 +39,7 @@ Route.group(() => {
     Route.post("/poll", "PollsController.create");
     Route.patch("/poll/:id", "PollsController.update");
     Route.delete("/poll/:id", "PollsController.destroy");
+    //
   }).middleware("auth");
 
   /**

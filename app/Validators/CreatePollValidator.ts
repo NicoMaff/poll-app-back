@@ -5,10 +5,15 @@ export default class CreatePollValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    question: schema.string(),
-    description: schema.string.optional(),
-    isMultipleChoice: schema.boolean(),
-    hasUndefinedChoice: schema.boolean(),
+    poll: schema.object().members({
+      question: schema.string(),
+      description: schema.string.optional(),
+      isMultipleChoice: schema.boolean(),
+      hasUndefinedChoice: schema.boolean(),
+    }),
+    options: schema
+      .array()
+      .members(schema.object().members({ title: schema.string.optional() })),
   });
 
   public messages: CustomMessages = {};
