@@ -12,23 +12,28 @@ patch {
 
 body:json {
   {
-    "question": "{{question}}",
-    "description": "{{description}}",
-    "isMultipleChoice": "{{isMultipleChoice}}",
-    "hasUndefinedChoice": "{{hasUndefinedChoice}}"
+    "poll": {
+      "question": "{{question}}",
+      "description": "{{description}}",
+      "isMultipleChoice": "{{isMultipleChoice}}",
+      "hasUndefinedChoice": "{{hasUndefinedChoice}}"
+    },
+    "options": [
+  
+    ]
   }
 }
 
 vars:pre-request {
-  id: 7c0036ff-58d3-46c5-927b-bd34369f5611
-  description: Nouvelle description2
+  id: 53a3a06f-60d3-49fe-bf7e-eb2b16b8ef75
+  ~description: Nouvelle description2
   ~question: 
   ~isMultipleChoice: 
   ~hasUndefinedChoice: 
 }
 
 docs {
-  This route allows an user to update one of his polls.
+  This route allows an user to update one of his polls and the related options.
   
   All properties are optional.
 }

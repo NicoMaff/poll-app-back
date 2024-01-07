@@ -6,30 +6,22 @@ meta {
 
 post {
   url: {{baseUrl}}/api/poll
-  body: json
+  body: multipartForm
   auth: none
 }
 
-body:json {
-  {
-    "question": "{{question}}",
-    "description": "{{decription}}",
-    "isMultipleChoice": "{{isMultipleChoice}}",
-    "hasUndefinedChoice": "{{hasUndefinedChoice}}"
-  }
-}
-
-vars:pre-request {
-  question: Ceci est une question test
-  description: description
-  isMultipleChoice: true
-  hasUndefinedChoice: false
+body:multipart-form {
+  poll: {"question": "Quelle couleur ?", "description": "choisir une couleur ou plusieurs couleurs", "isMultipleChoice": true, "hasUndefinedChoice":true}
+  options: [{"title": "bleu"}, {"title": "vert"}]
 }
 
 docs {
   This route allows an user to create a poll.
   
-  Only the question property is required! 
+  The request has to be use the multipart form-data format to send at the same time poll data and options data.
   
-  The boolean properties are set to false by default.
+  Concerning the poll, only the question property is required ; the boolean properties are set to false by default.
+  
+  Concerning the options, the title property is not required for each option.
+  The options field requires an array of options object.
 }
