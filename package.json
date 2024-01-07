@@ -24,7 +24,8 @@
     "#strategies/*": "./app/Strategies/*.ts",
     "#middlewares/*": "./app/Middleware/*.ts",
     "#utils/*": "./app/Utils/*.ts",
-    "#actions/*": "./app/Actions/*.ts"
+    "#actions/*": "./app/Actions/*.ts",
+    "#schemas/*": "./app/Schemas/*.ts"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.6",

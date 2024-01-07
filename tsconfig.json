@@ -45,6 +45,9 @@
       ],
       "#actions/*": [
         "./app/Actions/*.ts"
+      ],
+      "#schemas/*": [
+        "./app/Schemas/*.ts"
       ]
     },
     "types": [
