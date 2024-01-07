@@ -1,6 +1,8 @@
+import CreateOptionsLinkedToPoll from "#actions/polls/createOptionsLinkedToPoll";
 import CreatePollAction from "#actions/polls/createPollAction";
 import DeletePollAction from "#actions/polls/deletePollAction";
 import GetPollAction from "#actions/polls/getPollAction";
+import UpdateOptionsLinkedToPoll from "#actions/polls/updateOptionsLinkedToPoll";
 import UpdatePollAction from "#actions/polls/updatePollAction";
 import Poll from "#models/Poll";
 import { OptionalUuidSchema } from "#utils/genericSchemas";
@@ -16,7 +18,9 @@ export default class PollsController {
     private GetPollAction: GetPollAction,
     private CreatePollAction: CreatePollAction,
     private UpdatePollAction: UpdatePollAction,
-    private DeletePollAction: DeletePollAction
+    private DeletePollAction: DeletePollAction,
+    private CreateOptionsLinkedToPoll: CreateOptionsLinkedToPoll,
+    private UpdateOptionsLinkedToPoll: UpdateOptionsLinkedToPoll
   ) {}
 
   /**
@@ -43,9 +47,15 @@ export default class PollsController {
   public async create({ request, response, auth }: HttpContextContract) {
     const user = await auth.authenticate();
     const payload = await request.validate(CreatePollValidator);
-    const poll = await this.CreatePollAction.execute(payload, user);
 
-    return response.json(poll);
+    const poll = await this.CreatePollAction.execute(payload.poll, user);
+    await this.CreateOptionsLinkedToPoll.execute(payload.options, poll);
+
+    const pollWithOptions = await Poll.query()
+      .preload("options")
+      .where("id", poll.id)
+      .firstOrFail();
+    return response.json(pollWithOptions);
   }
 
   /**
@@ -66,18 +76,60 @@ export default class PollsController {
 
     const user = await auth.authenticate();
     const isAdmin = await bouncer.allows("isAdmin");
-    const poll = await Poll.findOrFail(id);
+    const poll = await Poll.query()
+      .preload("options")
+      .where("id", id)
+      .firstOrFail();
 
     if (!isAdmin && poll.user !== user)
       throw new Error("You don't own this poll!");
 
     const payload = await request.validate(UpdatePollValidator);
+    const options = (await poll.related("options").query()).map(
+      (option) => option.id
+    );
 
-    this.UpdatePollAction.execute(payload, poll);
+    console.log(options);
+
+    for (let i = 0; i < payload.options.length; i++) {
+      console.log(i);
+      console.log(payload.options[i].id);
+
+      if (!options.includes(payload.options[i].id))
+        throw new Error("This option id does not belong to this poll!");
+    }
+
+    this.UpdatePollAction.execute(payload.poll, poll);
+    await this.UpdateOptionsLinkedToPoll.execute(payload.options);
     await poll.save();
 
-    return response.json(poll);
+    const updatedPoll = await Poll.query()
+      .preload("options")
+      .where("id", poll.id)
+      .firstOrFail();
+
+    return response.json(updatedPoll);
   }
+
+  /**
+   * Destroy one option of a poll
+   */
+  // public async destroyOption({
+  //   params,
+  //   auth,
+  //   bouncer,
+  //   response,
+  // }: HttpContextContract) {
+  //   const user = await auth.authenticate();
+  //   const isAdmin = await bouncer.allows("isAdmin");
+
+  //   if (!isAdmin) {
+  //     const poll = await Poll.query()
+  //       .preload("options")
+  //       .where("userId", user.id)
+  //       .firstOrFail();
+  //   }
+  // }
 
   /**
    * Destroy one poll
