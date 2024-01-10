@@ -1,9 +1,11 @@
 import CreateOptionsLinkedToPoll from "#actions/polls/createOptionsLinkedToPoll";
 import CreatePollAction from "#actions/polls/createPollAction";
+import DeleteOptionLinkedToPoll from "#actions/polls/deleteOptionLinkedToPoll";
 import DeletePollAction from "#actions/polls/deletePollAction";
 import GetPollAction from "#actions/polls/getPollAction";
 import UpdateOptionsLinkedToPoll from "#actions/polls/updateOptionsLinkedToPoll";
 import UpdatePollAction from "#actions/polls/updatePollAction";
+import Option from "#models/Option";
 import Poll from "#models/Poll";
 import { OptionalUuidSchema } from "#utils/genericSchemas";
 import CreatePollValidator from "#validators/CreatePollValidator";
@@ -20,7 +22,8 @@ export default class PollsController {
     private UpdatePollAction: UpdatePollAction,
     private DeletePollAction: DeletePollAction,
     private CreateOptionsLinkedToPoll: CreateOptionsLinkedToPoll,
-    private UpdateOptionsLinkedToPoll: UpdateOptionsLinkedToPoll
+    private UpdateOptionsLinkedToPoll: UpdateOptionsLinkedToPoll,
+    private DeleteOptionLinkedToPoll: DeleteOptionLinkedToPoll
   ) {}
 
   /**
@@ -114,22 +117,29 @@ export default class PollsController {
   /**
    * Destroy one option of a poll
    */
-  // public async destroyOption({
-  //   params,
-  //   auth,
-  //   bouncer,
-  //   response,
-  // }: HttpContextContract) {
-  //   const user = await auth.authenticate();
-  //   const isAdmin = await bouncer.allows("isAdmin");
+  public async destroyOption({
+    params,
+    auth,
+    bouncer,
+    response,
+  }: HttpContextContract) {
+    const user = await auth.authenticate();
+    const isAdmin = await bouncer.allows("isAdmin");
 
-  //   if (!isAdmin) {
-  //     const poll = await Poll.query()
-  //       .preload("options")
-  //       .where("userId", user.id)
-  //       .firstOrFail();
-  //   }
-  // }
+    const option = await Option.findOrFail(params.id);
+
+    if (!isAdmin) {
+      const poll = await option.related("poll").query().firstOrFail();
+      console.log(poll.userId);
+
+      if (poll.userId !== user.id) throw new Error("You don't own this poll!");
+    }
+
+    await this.DeleteOptionLinkedToPoll.execute(option);
+    return response.json({
+      message: "The option has been correctly deleted",
+    });
+  }
 
   /**
    * Destroy one poll
