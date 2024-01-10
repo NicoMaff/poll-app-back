@@ -6,8 +6,27 @@ meta {
 
 post {
   url: {{baseUrl}}/api/poll
-  body: multipartForm
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "poll": {
+      "question": "Quelle couleur ?",
+      "description": "choisir une couleur",
+      "isMultipleChoice": true,
+      "hasUndefinedChoice": true
+    },
+    "options": [
+      {
+        "title": "bleu"
+      },
+      {
+        "title": "vert"
+      }
+    ]
+  }
 }
 
 body:multipart-form {
@@ -18,10 +37,11 @@ body:multipart-form {
 docs {
   This route allows an user to create a poll.
   
-  The request has to be use the multipart form-data format to send at the same time poll data and options data.
+  The request uses a JSON body with two key : 
+  - poll (with its properties) ;
+  - options (an array of options object).
   
   Concerning the poll, only the question property is required ; the boolean properties are set to false by default.
   
   Concerning the options, the title property is not required for each option.
-  The options field requires an array of options object.
 }

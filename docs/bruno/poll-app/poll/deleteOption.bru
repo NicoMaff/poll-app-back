@@ -1,0 +1,21 @@
+meta {
+  name: deleteOption
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{baseUrl}}/api/option/{{id}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  id: 16
+}
+
+docs {
+  This route allows:
+  - an user to delete one option related to one of his polls;
+  - the admin to delete any option.
+}

@@ -19,21 +19,28 @@ body:json {
       "hasUndefinedChoice": "{{hasUndefinedChoice}}"
     },
     "options": [
-  
+      {
+        "id": 18,
+        "title": "violet"
+      }
     ]
   }
 }
 
 vars:pre-request {
   id: 53a3a06f-60d3-49fe-bf7e-eb2b16b8ef75
+  question: Quelle couleur ?
   ~description: Nouvelle description2
-  ~question: 
   ~isMultipleChoice: 
   ~hasUndefinedChoice: 
 }
 
 docs {
   This route allows an user to update one of his polls and the related options.
+  
+  The request uses a JSON body with two key :
+  - poll (with its properties) ;
+  - options (an array of options object).
   
   All properties are optional.
 }
